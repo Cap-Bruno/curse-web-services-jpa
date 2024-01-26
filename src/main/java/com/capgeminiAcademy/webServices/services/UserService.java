@@ -2,6 +2,7 @@ package com.capgeminiAcademy.webServices.services;
 
 import com.capgeminiAcademy.webServices.entities.User;
 import com.capgeminiAcademy.webServices.repositories.UserRepository;
+import com.capgeminiAcademy.webServices.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insertUser(User user){
